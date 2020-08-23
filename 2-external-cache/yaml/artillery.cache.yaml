@@ -1,0 +1,10 @@
+config:
+  #target: https://one.azure-api.net
+  target: https://localhost:8081
+  phases:
+    - duration: 5
+      arrivalCount: 5
+scenarios:
+  - flow:
+      - get:
+          url: "/httpbin/delay/1"

@@ -1,0 +1,9 @@
+config:
+  target: https://localhost:8081
+  phases:
+    - duration: 5
+      arrivalCount: 200
+scenarios:
+  - flow:
+      - get:
+          url: "/httpbin/status/200"

@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telemetry-config
+data:
+  statsd.yaml: ""
+  prometheus.yaml: |
+    global:
+      scrape_interval:     3s
+      evaluation_interval: 3s
+    scrape_configs:
+      - job_name: 'prometheus'
+        static_configs:
+          - targets: ['localhost:9090']
+      - job_name: 'test_metrics'
+        static_configs:
+          - targets: ['localhost:9102']
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telemetry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telemetry
+  template:
+    metadata:
+      labels:
+        app: telemetry
+    spec:
+      containers:
+      - name: statsd
+        image: prom/statsd-exporter
+        ports:
+        - name: tcp
+          containerPort: 9102
+        - name: udp
+          containerPort: 8125
+          protocol: UDP
+        args:
+          - --statsd.mapping-config=/tmp/statsd.yaml
+          - --statsd.listen-udp=:8125
+          - --web.listen-address=:9102
+        volumeMounts:
+          - mountPath: /tmp
+            name: telemetry-config-files
+      - name: prometheus
+        image: prom/prometheus
+        ports:
+        - name: tcp
+          containerPort: 9090
+        args:
+          - --config.file=/tmp/prometheus.yaml
+        volumeMounts:
+          - mountPath: /tmp
+            name: telemetry-config-files
+      volumes:
+        - name: telemetry-config-files
+          configMap:
+            name: telemetry-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: statsd
+spec:
+  type: ClusterIP
+  ports:
+  - name: udp
+    port: 8125
+    targetPort: 8125
+    protocol: UDP
+  selector:
+    app: telemetry
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 9090
+    targetPort: 9090
+  selector:
+    app: telemetry

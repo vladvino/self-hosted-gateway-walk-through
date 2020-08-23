@@ -1,0 +1,10 @@
+config:
+  # use minikube port forwarding
+  target: https://192.168.64.5:30182
+  phases:
+    - duration: 30
+      arrivalCount: 900
+scenarios:
+  - flow:
+      - get:
+          url: "/httpbin/status/200"

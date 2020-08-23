@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: gateway-env
+data:
+  config.service.endpoint: "<self-hosted-gateway-management-endpoint>"
+  # copy below this line
+  telemetry.metrics.local: "statsd"
+  telemetry.metrics.local.statsd.endpoint: "statsd.telemetry:8125"
+  telemetry.metrics.local.statsd.sampling: "1"
+  telemetry.metrics.local.statsd.tag-format: "dogStatsD"

@@ -5,6 +5,7 @@ kubectl delete -f yaml/gateway.yaml --namespace=api-gateway
 kubectl delete -f 2-external-cache/yaml/redis.yaml --namespace=api-gateway
 kubectl delete -f 3-local-backend/yaml/httpbin.yaml --namespace=backend-service
 kubectl delete -f 5-local-telemetry/yaml/telemetry.yaml --namespace=telemetry
+kubectl delete -f 7-dapr-integration/yaml/httpbin-dapr.yaml --namespace=api-gateway
 kubectl delete secret --namespace api-gateway gateway-token
 kubectl delete namespace telemetry
 kubectl delete namespace backend-service

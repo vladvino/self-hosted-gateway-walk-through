@@ -8,6 +8,9 @@
 - A Kubernetes cluster
   - I am using a single-node [Minikube](https://minikube.sigs.k8s.io/docs/) cluster
 
+- Dapr
+  - Follow directions [here](https://github.com/dapr/docs/blob/master/getting-started/environment-setup.md) to install Dapr command line tools on your machine and runtime components to your cluster
+
 - An HTTP request generator tool
   - For making test requests I am using [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) extension for Visual Studio Code
   - For sending request barrages I am using [Artillery](https://artillery.io) load testing tool
@@ -19,4 +22,4 @@
 - Reset your API Management service
   - Delete any resources you created - e.g., gateway, cache, API(s), named values
 - Clean up the project
-  - Delete `gateway yaml` located in the root- Clean up web app
+  - Delete `gateway yaml` located in the root yaml folder

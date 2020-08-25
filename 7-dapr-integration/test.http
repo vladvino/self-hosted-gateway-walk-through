@@ -1,13 +1,15 @@
 # API BASE URL
-@api-cloud = https://one.azure-api.net/httpbin
-@api-local = https://localhost:8081/httpbin
-@api = {{api-local}}
+@api = https://localhost:8081/httpbin
 
 # REQUESTS
 GET {{api}}/get
+api-key: {{api-key}}
+ocp-apim-trace: true
 ###
 POST {{api}}/post
 Content-Type: application/json
+api-key: {{api-key}}
+ocp-apim-trace: true
 
 {
     "Location": "Ready 2020",
@@ -15,8 +17,12 @@ Content-Type: application/json
 }
 ###
 GET {{api}}/status/418
+api-key: {{api-key}}
+ocp-apim-trace: true
 ###
 GET {{api}}/delay/2
+api-key: {{api-key}}
+ocp-apim-trace: true
 
 # TO ENABLE TRACING
 # api-key: {{api-key}}
